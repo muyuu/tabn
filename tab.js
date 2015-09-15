@@ -154,10 +154,8 @@
     Module.prototype.addedClass = function() {
 
         var addedClass = this.opt.currentClass;
+        if (this.isCssAnime()) addedClass += " is-transition";
 
-        if (this.opt.animation) {
-            addedClass += " is-transition";
-        }
         return addedClass;
     };
 
@@ -168,20 +166,39 @@
      */
     Module.prototype.changeTab = function() {
 
+        var index = this.currentIndex;
+
         this.changeHash();
 
+        // change tab head
         this.$item
             .removeClass(this.addedClass())
-            .eq(this.currentIndex)
+            .eq(index)
             .addClass(this.addedClass());
+
+
+        // change tab content
+        if (this.isJsAnime()) this.$content.hide();
 
         this.$content
             .removeClass(this.addedClass())
-            .eq(this.currentIndex)
-            .addClass(this.addedClass());
+            .eq(index)
+            .addClass(this.addedClass())
+
+        if (this.isJsAnime()) this.$content.eq(index).fadeIn();
 
         return this;
     };
+
+
+    Module.prototype.isJsAnime = function(){
+        return !!this.opt.animation && this.opt.animation !== 'css';
+    }
+
+
+    Module.prototype.isCssAnime = function(){
+        return this.opt.animation === 'css';
+    }
 
 
     /**
