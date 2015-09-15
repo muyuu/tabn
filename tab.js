@@ -116,7 +116,7 @@
     Module.prototype.setElement = function() {
         this.$item = this.$root.find(this.opt.item);
         this.$content = this.$root.find(this.opt.content);
-        return false;
+        return this;
     };
 
 
@@ -125,7 +125,7 @@
      */
     Module.prototype.setHash = function() {
         this.hash = window.location.hash.replace("#", "") || null;
-        return false;
+        return this;
     };
 
 
@@ -143,7 +143,7 @@
                 this.currentIndex = this.$root.find("#" + this.hash).index();
             }
         }
-        return false;
+        return this;
     };
 
 
@@ -180,7 +180,7 @@
             .eq(this.currentIndex)
             .addClass(this.addedClass());
 
-        return false;
+        return this;
     };
 
 
