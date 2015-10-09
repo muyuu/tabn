@@ -218,7 +218,7 @@
 
 
     Module.prototype.loaded = function(){
-        if ( !this.loadFlg ) this.opt.onLoad();
+        if ( !this.loadFlg && typeof this.opt.onLoad === 'function' ) this.opt.onLoad();
         this.loadFlg = true;
     };
 
