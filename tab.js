@@ -1,4 +1,4 @@
-(function ( definition ) {
+(function(definition){
     "use strict";
 
     var moduleName = "Tab";
@@ -10,11 +10,8 @@
     } else {
         root[moduleName] = definition(root, $);
     }
-
-})(function(root, $) {
+})(function(root, $){
     "use strict";
-
-    var Module;
 
     // -------------------------------------------------------
     // utility functions
@@ -24,19 +21,28 @@
      * @param  {any} x anything
      * @return {boolean}
      */
-    function existy(x) {
-        return x != null;
-    }
-
+    function existy(x){ return x != null; }
 
     /**
      * judge true
      * @param  {any} x anything
      * @return {boolean}
      */
-    function truthy(x) {
-        return (x !== false) && existy(x);
-    }
+    function truthy(x){ return (x !== false) && existy(x); }
+
+    /**
+     * trim string "."
+     * @param  {string} string text
+     * @return {string}        cutted "." string
+     */
+    function trimDot(string){ return string.replace(".", ""); }
+
+    /**
+     * judge undefined
+     * @param  {any} obj anything
+     * @return {boolean}
+     */
+    function isUndefined(obj){ return obj === void 0; }
 
 
     // -------------------------------------------------------
@@ -50,18 +56,23 @@
      * @prop {array} instance
      * @namespace
      */
-    function Factory(param) {
+    function Factory(param){
 
         var rootElement = ".js-tab";
-
-        // param is option object
         var opt = existy(param) ? param : {};
 
-        // set root element
-        var $self = existy(opt.root) ? $(opt.root) : $(rootElement);
+        var $self;
+        if ( existy(opt.root) ) {
+            if(opt.root instanceof jQuery) {
+                $self = param.root;
+            } else {
+                $self = $(param.root);
+            }
+        } else {
+            $self = $(rootElement);
+        }
 
-        // make instances and push array
-        this.instance = $self.map(function(key, val) {
+        this[0] = $self.map(function(key, val){
             return new Module(opt, val);
         });
     }
@@ -71,51 +82,49 @@
      * constructor
      * @type {Function}
      */
-    Module = function(param, moduleRoot) {
-
-        var self = this;
-
-        // DOM element
-        this.$root = $(moduleRoot);
-        this.$item = null;
-        this.$content = null;
-
-        this.currentIndex = 0;
-
-        this.hash = null;
+    function Module(opt, moduleRoot){
 
         // option
         this.opt = {
-            tab         : existy(param.tab) ? param.tab : ".js-tab__head",
-            item        : existy(param.item) ? param.item : ".js-tab__item",
-            body        : existy(param.body) ? param.body : ".js-tab__body",
-            content     : existy(param.content) ? param.conetnt : ".js-tab__content",
-            currentClass: existy(param.currentClass) ? param.cunnretClass : "is-current",
-            animation   : truthy(param.animation) ? param.animation : true
+            tab         : existy(opt.tab) ? opt.tab : ".js-tab__head",
+            item        : existy(opt.item) ? opt.item : ".js-tab__item",
+            body        : existy(opt.body) ? opt.body : ".js-tab__body",
+            content     : existy(opt.content) ? opt.conetnt : ".js-tab__content",
+            currentClass: existy(opt.currentClass) ? opt.cunnretClass : "is-current",
+            animation   : truthy(opt.animation) ? opt.animation : true,
+
+            onLoad      : truthy(opt.onLoad) ? opt.onLoad : null
         };
 
-        this.setElement();
+        // elements
+        this.$root = $(moduleRoot);
+        this.$item = this.$root.find(this.opt.item);
+        this.$content = this.$root.find(this.opt.content);
+
+        // state
+        this.currentIndex = 0;
+        this.loadFlg = false;
+        this.hash = null;
+
+        this.init();
+    }
+
+
+    Module.prototype.init = function() {
         this.setHash();
         this.setCurrent();
-
         this.changeTab();
+        this.setHeadEvent();
+        return this;
+    };
 
-        // set event
+    Module.prototype.setHeadEvent = function() {
+        var self = this;
         this.$item.on("click", "a", function() {
             self.setCurrent(this);
             self.changeTab();
             return false;
         });
-    };
-
-
-    /**
-     * cache jQuery object
-     * @returns {boolean}
-     */
-    Module.prototype.setElement = function() {
-        this.$item = this.$root.find(this.opt.item);
-        this.$content = this.$root.find(this.opt.content);
         return this;
     };
 
@@ -165,6 +174,7 @@
      * @return {boolean} false
      */
     Module.prototype.changeTab = function() {
+        var self = this;
 
         var index = this.currentIndex;
 
@@ -183,9 +193,15 @@
         this.$content
             .removeClass(this.addedClass())
             .eq(index)
-            .addClass(this.addedClass())
+            .addClass(this.addedClass());
 
-        if (this.isJsAnime()) this.$content.eq(index).fadeIn();
+        if (this.isJsAnime()) {
+            this.$content.eq(index).fadeIn(function(){
+                self.loaded();
+            });
+        } else {
+            self.loaded();
+        }
 
         return this;
     };
@@ -193,12 +209,18 @@
 
     Module.prototype.isJsAnime = function(){
         return !!this.opt.animation && this.opt.animation !== 'css';
-    }
+    };
 
 
     Module.prototype.isCssAnime = function(){
         return this.opt.animation === 'css';
-    }
+    };
+
+
+    Module.prototype.loaded = function(){
+        if ( !this.loadFlg ) this.opt.onLoad();
+        this.loadFlg = true;
+    };
 
 
     /**
