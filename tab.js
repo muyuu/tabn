@@ -1,7 +1,7 @@
 (function(definition){
     "use strict";
 
-    var moduleName = "Tab";
+    var moduleName = "uiTab";
 
     var root = (typeof self === "object" && self.self === self && self) || (typeof global === "object" && global.global === global && global);
 
@@ -56,7 +56,7 @@
      * @prop {array} instance
      * @namespace
      */
-    function Factory(param){
+    function factory(param){
 
         var rootElement = ".js-tab";
         var opt = existy(param) ? param : {};
@@ -72,7 +72,7 @@
             $self = $(rootElement);
         }
 
-        this[0] = $self.map(function(key, val){
+        return $self.map(function(key, val){
             return new Module(opt, val);
         });
     }
@@ -230,5 +230,5 @@
         return false;
     };
 
-    return Factory;
+    return factory;
 });
