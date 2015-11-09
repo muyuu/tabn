@@ -17,20 +17,6 @@
     // utility functions
     // -------------------------------------------------------
     /**
-     * judge exist function
-     * @param  {any} x anything
-     * @return {boolean}
-     */
-    function existy(x){ return x != null; }
-
-    /**
-     * judge true
-     * @param  {any} x anything
-     * @return {boolean}
-     */
-    function truthy(x){ return (x !== false) && existy(x); }
-
-    /**
      * trim string "."
      * @param  {string} string text
      * @return {string}        cutted "." string
@@ -59,10 +45,10 @@
     function factory(param){
 
         var rootElement = ".js-tab";
-        var opt = existy(param) ? param : {};
+        var opt = !isUndefined(param) ? param : {};
 
         var $self;
-        if ( existy(opt.root) ) {
+        if ( opt.root ) {
             if(opt.root instanceof jQuery) {
                 $self = param.root;
             } else {
@@ -86,14 +72,14 @@
 
         // option
         this.opt = {
-            tab         : existy(opt.tab) ? opt.tab : ".js-tab__head",
-            item        : existy(opt.item) ? opt.item : ".js-tab__item",
-            body        : existy(opt.body) ? opt.body : ".js-tab__body",
-            content     : existy(opt.content) ? opt.conetnt : ".js-tab__content",
-            currentClass: existy(opt.currentClass) ? opt.cunnretClass : "is-current",
-            animation   : truthy(opt.animation) ? opt.animation : true,
+            tab         : !isUndefined(opt.tab) ? opt.tab : ".js-tab__head",
+            item        : !isUndefined(opt.item) ? opt.item : ".js-tab__item",
+            body        : !isUndefined(opt.body) ? opt.body : ".js-tab__body",
+            content     : !isUndefined(opt.content) ? opt.conetnt : ".js-tab__content",
+            currentClass: !isUndefined(opt.currentClass) ? opt.cunnretClass : "is-current",
+            animation   : !isUndefined(opt.animation) ? opt.animation : true,
 
-            onLoad      : truthy(opt.onLoad) ? opt.onLoad : null
+            onLoad      : !isUndefined(opt.onLoad) ? opt.onLoad : null
         };
 
         // elements
