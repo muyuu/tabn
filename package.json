@@ -1,11 +1,11 @@
 {
-  "name": "",
+  "name": "antibase-tab",
   "version": "1.0.0",
   "description": "DOM Tab UI module",
   "main": "tab.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/muyuu/"
+    "url": "https://github.com/muyuu/antibase-tab"
   },
   "keywords": [
     "tab",
@@ -26,9 +26,10 @@
     "gulp-open": "^0.3.1",
     "gulp-rename": "",
     "gulp-sourcemaps": "",
-    "gulp-uglify": "",
-    "jquery": "^2.1.4",
-    "underscore": "^1.8.3"
+    "gulp-uglify": ""
+  },
+  "dependencies": {
+    "jquery": "^1.11.3"
   },
   "author": "muyuu",
   "license": "MIT"
