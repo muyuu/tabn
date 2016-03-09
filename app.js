@@ -1,6 +1,6 @@
 /*global Tab*/
-(function($, _, global) {
+(function($, global) {
     "use strict";
-    var tab01 = uiTab();
+    var tab01 = tabn();
 
-})(jQuery, _, (this || 0).self || global);
+})(jQuery, (this || 0).self || global);

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-	<title>ui-tab</title>
+	<title>tabn</title>
 	<meta name="description" content="">
 	<meta name="keywords" content="">
 	<link rel="stylesheet" href="./style.css">
@@ -13,9 +13,9 @@
 	<div id="pageHeader" class="pageHeader">
 		<div class="container">
 			<div class="box">
-				<h1>page title</h1>
+				<h1>tabn</h1>
 
-				<p>html boilerplate base.</p>
+				<p>JavaScript browser Tab Interface module.</p>
 			</div>
 		</div>
 	</div>
@@ -27,25 +27,25 @@
 						<h2>tab</h2>
 					</div>
 					<div class="col9">
-						<div class="tab js-tab">
-							<ul class="tab__head js-tab__head">
-								<li class="tab__item js-tab__item"><a href="#install" class="js-noAnchor">インストール</a></li>
-								<li class="tab__item js-tab__item"><a href="#howtouse" class="js-noAnchor">使い方</a></li>
-								<li class="tab__item js-tab__item"><a href="#option" class="js-noAnchor">オプション</a></li>
+						<div class="tab js-tabn">
+							<ul class="tab__head js-tabn__head">
+								<li class="tab__item js-tabn__item"><a href="#install" class="js-noAnchor">インストール</a></li>
+								<li class="tab__item js-tabn__item"><a href="#howtouse" class="js-noAnchor">使い方</a></li>
+								<li class="tab__item js-tabn__item"><a href="#option" class="js-noAnchor">オプション</a></li>
 							</ul>
-							<ul class="tabBody js-tab__body">
-								<li id="install" class="tab__content js-tab__content">
+							<ul class="tabBody js-tabn__body">
+								<li id="install" class="tab__content js-tabn__content">
 									<p>htmlにタブを書く</p>
-                      <pre><code>&lt;div class="js-tab"&gt;
-												&lt;ul class="js-tab__head"&gt;
-												&lt;li class="js-tab__item"&gt;タブ1&lt;/li&gt;
-												&lt;li class="js-tab__item"&gt;タブ2&lt;/li&gt;
-												&lt;li class="js-tab__item"&gt;タブ3&lt;/li&gt;
+                      <pre><code>&lt;div class="js-tabn"&gt;
+												&lt;ul class="js-tabn__head"&gt;
+												&lt;li class="js-tabn__item"&gt;タブ1&lt;/li&gt;
+												&lt;li class="js-tabn__item"&gt;タブ2&lt;/li&gt;
+												&lt;li class="js-tabn__item"&gt;タブ3&lt;/li&gt;
 												&lt;/ul&gt;
-												&lt;ul class="js-tab__body"&gt;
-												&lt;li class="js-tab__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
-												&lt;li class="js-tab__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
-												&lt;li class="js-tab__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
+												&lt;ul class="js-tabn__body"&gt;
+												&lt;li class="js-tabn__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
+												&lt;li class="js-tabn__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
+												&lt;li class="js-tabn__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
 												&lt;/ul&gt;
 												&lt;/div&gt;</code></pre>
 									<p>css はお好みで。</p>
@@ -59,36 +59,36 @@
 									<pre><code>&lt;script src='/tab.js'&gt;&lt;/script&gt;</code></pre>
 									<p>準備は以上になります！</p>
 								</li>
-								<li id="howtouse" class="tab__content js-tab__content">
+								<li id="howtouse" class="tab__content js-tabn__content">
 									<p>タブとタブのコンテンツをラップした要素をセレクターに指定</p>
 									<pre><code>app.tab.set({".tab"});</code></pre>
 									<p>アクティブタブとコンテンツには .is-current が付与される</p>
 
-									<p>タブはデフォルトはセレクタ内の .js-tab__item 。</p>
+									<p>タブはデフォルトはセレクタ内の .js-tabn__item 。</p>
 
-									<p>タブをラップする要素はデフォルトはセレクタ内の .js-tab 。変更したい場合はオプションを付与。</p>
+									<p>タブをラップする要素はデフォルトはセレクタ内の .js-tabn 。変更したい場合はオプションを付与。</p>
 								</li>
-								<li id="option" class="tab__content js-tab__content">
+								<li id="option" class="tab__content js-tabn__content">
 									<table class="table">
 										<tr>
 											<th class="table__th">root</th>
-											<td class="table__td">タブの要素（デフォルトは .js-tab ）</td>
+											<td class="table__td">タブの要素（デフォルトは .js-tabn ）</td>
 										</tr>
 										<tr>
 											<th class="table__th">tab</th>
-											<td class="table__td">タブのラッパー（デフォルトは .js-tab__head ）</td>
+											<td class="table__td">タブのラッパー（デフォルトは .js-tabn__head ）</td>
 										</tr>
 										<tr>
 											<th class="table__th">item</th>
-											<td class="table__td">タブ（デフォルトは .js-tab__item ）</td>
+											<td class="table__td">タブ（デフォルトは .js-tabn__item ）</td>
 										</tr>
 										<tr>
 											<th class="table__th">body</th>
-											<td class="table__td">タブの中身のラッパー（デフォルトは js-tab__body ）</td>
+											<td class="table__td">タブの中身のラッパー（デフォルトは js-tabn__body ）</td>
 										</tr>
 										<tr>
 											<th class="table__th">content</th>
-											<td class="table__td">タブの中身（デフォルトは .js-tab__content ）</td>
+											<td class="table__td">タブの中身（デフォルトは .js-tabn__content ）</td>
 										</tr>
 										<tr>
 											<th class="table__th">currentClass</th>
@@ -99,25 +99,25 @@
 							</ul>
 						</div>
 
-						<div class="u-mgt--40 tab js-tab">
-							<ul class="tab__head js-tab__head">
-								<li class="tab__item js-tab__item"><a href="#install" class="js-noAnchor">インストール</a></li>
-								<li class="tab__item js-tab__item"><a href="#howtouse" class="js-noAnchor">使い方</a></li>
-								<li class="tab__item js-tab__item"><a href="#option" class="js-noAnchor">オプション</a></li>
+						<div class="u-mgt--40 tab js-tabn">
+							<ul class="tab__head js-tabn__head">
+								<li class="tab__item js-tabn__item"><a href="#install" class="js-noAnchor">インストール</a></li>
+								<li class="tab__item js-tabn__item"><a href="#howtouse" class="js-noAnchor">使い方</a></li>
+								<li class="tab__item js-tabn__item"><a href="#option" class="js-noAnchor">オプション</a></li>
 							</ul>
-							<ul class="tabBody js-tab__body">
-								<li id="install" class="tab__content js-tab__content">
+							<ul class="tabBody js-tabn__body">
+								<li id="install" class="tab__content js-tabn__content">
 									<p>htmlにタブを書く</p>
-                      <pre><code>&lt;div class="js-tab"&gt;
-												&lt;ul class="js-tab__head"&gt;
-												&lt;li class="js-tab__item"&gt;タブ1&lt;/li&gt;
-												&lt;li class="js-tab__item"&gt;タブ2&lt;/li&gt;
-												&lt;li class="js-tab__item"&gt;タブ3&lt;/li&gt;
+                      <pre><code>&lt;div class="js-tabn"&gt;
+												&lt;ul class="js-tabn__head"&gt;
+												&lt;li class="js-tabn__item"&gt;タブ1&lt;/li&gt;
+												&lt;li class="js-tabn__item"&gt;タブ2&lt;/li&gt;
+												&lt;li class="js-tabn__item"&gt;タブ3&lt;/li&gt;
 												&lt;/ul&gt;
-												&lt;ul class="js-tab__body"&gt;
-												&lt;li class="js-tab__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
-												&lt;li class="js-tab__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
-												&lt;li class="js-tab__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
+												&lt;ul class="js-tabn__body"&gt;
+												&lt;li class="js-tabn__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
+												&lt;li class="js-tabn__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
+												&lt;li class="js-tabn__content"&gt;中身ですよ、中身。文句あっか&lt;/li&gt;
 												&lt;/ul&gt;
 												&lt;/div&gt;</code></pre>
 									<p>css はお好みで。</p>
@@ -131,36 +131,36 @@
 									<pre><code>&lt;script src='/tab.js'&gt;&lt;/script&gt;</code></pre>
 									<p>準備は以上になります！</p>
 								</li>
-								<li id="howtouse" class="tab__content js-tab__content">
+								<li id="howtouse" class="tab__content js-tabn__content">
 									<p>タブとタブのコンテンツをラップした要素をセレクターに指定</p>
 									<pre><code>app.tab.set({".tab"});</code></pre>
 									<p>アクティブタブとコンテンツには .is-current が付与される</p>
 
-									<p>タブはデフォルトはセレクタ内の .js-tab__item 。</p>
+									<p>タブはデフォルトはセレクタ内の .js-tabn__item 。</p>
 
-									<p>タブをラップする要素はデフォルトはセレクタ内の .js-tab 。変更したい場合はオプションを付与。</p>
+									<p>タブをラップする要素はデフォルトはセレクタ内の .js-tabn 。変更したい場合はオプションを付与。</p>
 								</li>
-								<li id="option" class="tab__content js-tab__content">
+								<li id="option" class="tab__content js-tabn__content">
 									<table class="table">
 										<tr>
 											<th class="table__th">root</th>
-											<td class="table__td">タブの要素（デフォルトは .js-tab ）</td>
+											<td class="table__td">タブの要素（デフォルトは .js-tabn ）</td>
 										</tr>
 										<tr>
 											<th class="table__th">tab</th>
-											<td class="table__td">タブのラッパー（デフォルトは .js-tab__head ）</td>
+											<td class="table__td">タブのラッパー（デフォルトは .js-tabn__head ）</td>
 										</tr>
 										<tr>
 											<th class="table__th">item</th>
-											<td class="table__td">タブ（デフォルトは .js-tab__item ）</td>
+											<td class="table__td">タブ（デフォルトは .js-tabn__item ）</td>
 										</tr>
 										<tr>
 											<th class="table__th">body</th>
-											<td class="table__td">タブの中身のラッパー（デフォルトは js-tab__body ）</td>
+											<td class="table__td">タブの中身のラッパー（デフォルトは js-tabn__body ）</td>
 										</tr>
 										<tr>
 											<th class="table__th">content</th>
-											<td class="table__td">タブの中身（デフォルトは .js-tab__content ）</td>
+											<td class="table__td">タブの中身（デフォルトは .js-tabn__content ）</td>
 										</tr>
 										<tr>
 											<th class="table__th">currentClass</th>
@@ -180,8 +180,7 @@
 </div>
 
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="node_modules/underscore/underscore-min.js"></script>
-<script src="./tab.js"></script>
+<script src="./tabn.js"></script>
 <script src="./app.js"></script>
 </body>
 </html>

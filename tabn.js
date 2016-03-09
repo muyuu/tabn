@@ -1,7 +1,7 @@
-(function(definition){
+(function(definition) {
     "use strict";
 
-    var moduleName = "uiTab";
+    var moduleName = "tabn";
 
     var root = (typeof self === "object" && self.self === self && self) || (typeof global === "object" && global.global === global && global);
 
@@ -10,7 +10,7 @@
     } else {
         root[moduleName] = definition(root, $);
     }
-})(function(root, $){
+})(function(root, $) {
     "use strict";
 
     // -------------------------------------------------------
@@ -21,14 +21,14 @@
      * @param  {string} string text
      * @return {string}        cutted "." string
      */
-    function trimDot(string){ return string.replace(".", ""); }
+    function trimDot(string) { return string.replace(".", ""); }
 
     /**
      * judge undefined
      * @param  {any} obj anything
      * @return {boolean}
      */
-    function isUndefined(obj){ return obj === void 0; }
+    function isUndefined(obj) { return obj === void 0; }
 
 
     // -------------------------------------------------------
@@ -42,25 +42,23 @@
      * @prop {array} instance
      * @namespace
      */
-    function factory(param){
+    function factory(param) {
 
-        var rootElement = ".js-tab";
+        var rootElement = ".js-tabn";
         var opt = !isUndefined(param) ? param : {};
 
-        var $self;
-        if ( opt.root ) {
-            if(opt.root instanceof jQuery) {
-                $self = param.root;
-            } else {
-                $self = $(param.root);
-            }
-        } else {
-            $self = $(rootElement);
-        }
+        var $list;
+        if (isUndefined(opt.root)) $list = $(rootElement);
+        if (!isUndefined(opt.root)) $list = opt.root instanceof $ ? param.root : $(param.root);
 
-        return $self.map(function(key, val){
-            return new Module(opt, val);
-        });
+        var length = $list.length;
+        if (length < 0) return false;
+
+        var mappedlist = [];
+        for (var i = 0; i < length; i++) {
+            mappedlist[i] = new Module(opt, $list[i]);
+        }
+        return mappedlist;
     }
 
 
@@ -68,14 +66,14 @@
      * constructor
      * @type {Function}
      */
-    function Module(opt, moduleRoot){
+    function Module(opt, moduleRoot) {
 
         // option
         this.opt = {
-            tab         : !isUndefined(opt.tab) ? opt.tab : ".js-tab__head",
-            item        : !isUndefined(opt.item) ? opt.item : ".js-tab__item",
-            body        : !isUndefined(opt.body) ? opt.body : ".js-tab__body",
-            content     : !isUndefined(opt.content) ? opt.conetnt : ".js-tab__content",
+            tab         : !isUndefined(opt.tab) ? opt.tab : ".js-tabn__head",
+            item        : !isUndefined(opt.item) ? opt.item : ".js-tabn__item",
+            body        : !isUndefined(opt.body) ? opt.body : ".js-tabn__body",
+            content     : !isUndefined(opt.content) ? opt.conetnt : ".js-tabn__content",
             currentClass: !isUndefined(opt.currentClass) ? opt.cunnretClass : "is-current",
             animation   : !isUndefined(opt.animation) ? opt.animation : true,
 
@@ -182,7 +180,7 @@
             .addClass(this.addedClass());
 
         if (this.isJsAnime()) {
-            this.$content.eq(index).fadeIn(function(){
+            this.$content.eq(index).fadeIn(function() {
                 self.loaded();
             });
         } else {
@@ -193,18 +191,18 @@
     };
 
 
-    Module.prototype.isJsAnime = function(){
-        return !!this.opt.animation && this.opt.animation !== 'css';
+    Module.prototype.isJsAnime = function() {
+        return !!this.opt.animation && this.opt.animation !== "css";
     };
 
 
-    Module.prototype.isCssAnime = function(){
-        return this.opt.animation === 'css';
+    Module.prototype.isCssAnime = function() {
+        return this.opt.animation === "css";
     };
 
 
-    Module.prototype.loaded = function(){
-        if ( !this.loadFlg && typeof this.opt.onLoad === 'function' ) this.opt.onLoad();
+    Module.prototype.loaded = function() {
+        if (!this.loadFlg && typeof this.opt.onLoad === "function") this.opt.onLoad();
         this.loadFlg = true;
     };
 

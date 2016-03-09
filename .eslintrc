@@ -1,5 +1,6 @@
 {
     "rules": {
+        "curly": [2, "multi-line"],
         "no-unused-vars": [0],
          "key-spacing": [0, {
              "align": "colon"
