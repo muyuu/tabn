@@ -1,32 +1,25 @@
-"use strict";
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-(function (definition) {
+(function(definition){
     "use strict";
 
     var moduleName = "tabn";
 
-    var root = (typeof self === "undefined" ? "undefined" : _typeof(self)) === "object" && self.self === self && self || (typeof global === "undefined" ? "undefined" : _typeof(global)) === "object" && global.global === global && global;
+    var root = (typeof self === "object" && self.self === self && self) || (typeof global === "object" && global.global === global && global);
 
-    if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === "object") {
+    if (typeof exports === "object"){
         module.exports = definition(root, require("jquery"));
     } else {
         root[moduleName] = definition(root, $);
     }
-})(function (root, $) {
+})(function(root, $){
     "use strict";
 
     // -------------------------------------------------------
     // utility functions
     // -------------------------------------------------------
 
-    var trimDot = function trimDot(string) {
-        return string.replace(".", "");
-    };
-    var isUndefined = function isUndefined(obj) {
-        return obj === void 0;
-    };
+    const trimDot = string => string.replace(".", "");
+    const isUndefined = obj => obj === void 0;
+
 
     // -------------------------------------------------------
     // module
@@ -39,7 +32,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @prop {array} instance
      * @namespace
      */
-    function factory(param) {
+    function factory(param){
 
         var rootElement = ".js-tabn";
         var opt = !isUndefined(param) ? param : {};
@@ -52,26 +45,27 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         if (length < 0) return false;
 
         var mappedlist = [];
-        for (var i = 0; i < length; i++) {
+        for (var i = 0; i < length; i++){
             mappedlist[i] = new Module(opt, $list[i]);
         }
         return mappedlist;
     }
 
+
     /**
      * constructor
      * @type {Function}
      */
-    function Module(opt, moduleRoot) {
+    function Module(opt, moduleRoot){
 
         // option
         this.opt = {
-            tab: !isUndefined(opt.tab) ? opt.tab : ".js-tabn__head",
-            item: !isUndefined(opt.item) ? opt.item : ".js-tabn__item",
-            body: !isUndefined(opt.body) ? opt.body : ".js-tabn__body",
-            content: !isUndefined(opt.content) ? opt.conetnt : ".js-tabn__content",
+            tab         : !isUndefined(opt.tab) ? opt.tab : ".js-tabn__head",
+            item        : !isUndefined(opt.item) ? opt.item : ".js-tabn__item",
+            body        : !isUndefined(opt.body) ? opt.body : ".js-tabn__body",
+            content     : !isUndefined(opt.content) ? opt.conetnt : ".js-tabn__content",
             currentClass: !isUndefined(opt.currentClass) ? opt.cunnretClass : "is-current",
-            animation: !isUndefined(opt.animation) ? opt.animation : true,
+            animation   : !isUndefined(opt.animation) ? opt.animation : true,
 
             onLoad: !isUndefined(opt.onLoad) ? opt.onLoad : null
         };
@@ -89,7 +83,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.init();
     }
 
-    Module.prototype.init = function () {
+
+    Module.prototype.init = function(){
         this.setHash();
         this.setCurrent();
         this.changeTab();
@@ -97,24 +92,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return this;
     };
 
-    Module.prototype.setHeadEvent = function () {
-        var _this = this;
-
-        this.$item.on("click", "a", function (e) {
-            _this.setCurrent(e.currentTarget);
-            _this.changeTab();
+    Module.prototype.setHeadEvent = function(){
+        this.$item.on("click", "a", (e)=>{
+            this.setCurrent(e.currentTarget);
+            this.changeTab();
             return false;
         });
         return this;
     };
 
+
     /**
      * set location hash
      */
-    Module.prototype.setHash = function () {
+    Module.prototype.setHash = function(){
         this.hash = window.location.hash.replace("#", "") || null;
         return this;
     };
+
 
     /**
      * cache current item
@@ -122,22 +117,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @param {object} [ele] current item element
      *
      */
-    Module.prototype.setCurrent = function (ele) {
-        if (ele != null) {
+    Module.prototype.setCurrent = function(ele){
+        if (ele != null){
             this.currentIndex = $(ele).parents(this.opt.item).index();
         } else {
-            if (this.$root.find("#" + this.hash).index() !== -1) {
+            if (this.$root.find("#" + this.hash).index() !== -1){
                 this.currentIndex = this.$root.find("#" + this.hash).index();
             }
         }
         return this;
     };
 
+
     /**
      * make classes at be have item & body
      * @return {string} addedClass
      */
-    Module.prototype.addedClass = function () {
+    Module.prototype.addedClass = function(){
 
         var addedClass = this.opt.currentClass;
         if (this.isCssAnimate()) addedClass += " is-transition";
@@ -145,28 +141,35 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return addedClass;
     };
 
+
     /**
      * change tab
      * @return {object} this
      */
-    Module.prototype.changeTab = function () {
-        var _this2 = this;
+    Module.prototype.changeTab = function(){
 
         var index = this.currentIndex;
 
         this.changeHash();
 
         // change tab head
-        this.$item.removeClass(this.addedClass()).eq(index).addClass(this.addedClass());
+        this.$item
+            .removeClass(this.addedClass())
+            .eq(index)
+            .addClass(this.addedClass());
+
 
         // change tab content
         if (this.isJsAnimate()) this.$content.hide();
 
-        this.$content.removeClass(this.addedClass()).eq(index).addClass(this.addedClass());
+        this.$content
+            .removeClass(this.addedClass())
+            .eq(index)
+            .addClass(this.addedClass());
 
-        if (this.isJsAnimate()) {
-            this.$content.eq(index).fadeIn(function () {
-                _this2.loaded();
+        if (this.isJsAnimate()){
+            this.$content.eq(index).fadeIn(()=>{
+                this.loaded();
             });
         } else {
             this.loaded();
@@ -175,23 +178,27 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return this;
     };
 
-    Module.prototype.isJsAnimate = function () {
+
+    Module.prototype.isJsAnimate = function(){
         return !!this.opt.animation && this.opt.animation !== "css";
     };
 
-    Module.prototype.isCssAnimate = function () {
+
+    Module.prototype.isCssAnimate = function(){
         return this.opt.animation === "css";
     };
 
-    Module.prototype.loaded = function () {
+
+    Module.prototype.loaded = function(){
         if (!this.loadFlg && typeof this.opt.onLoad === "function") this.opt.onLoad();
         this.loadFlg = true;
     };
 
+
     /**
      * change hash
      */
-    Module.prototype.changeHash = function () {
+    Module.prototype.changeHash = function(){
         return false;
     };
 

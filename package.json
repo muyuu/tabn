@@ -2,6 +2,7 @@
   "name": "tabn",
   "version": "1.0.0",
   "description": "DOM Tab UI module",
+  "author": "muyuu",
   "main": "tabn.js",
   "repository": {
     "type": "git",
@@ -11,25 +12,38 @@
     "tab",
     "browser"
   ],
+  "files": [
+    "README.md",
+    "index.html",
+    "style.css",
+    "app.js",
+    "tabn.js",
+    "tabn.min.js",
+    "tabn.min.js.map",
+    "src"
+  ],
+  "license": "MIT",
   "scripts": {
+    "start": "gulp",
     "build": "gulp build",
-    "eslint": "eslint tabn.js"
+    "lint": "eslint tabn.js"
+  },
+  "dependencies": {
+    "jquery": ">=1.10.0"
   },
   "devDependencies": {
-    "eslint": "^2.3.0",
+    "babel-preset-es2015": "^6.3.13",
+    "eslint": "^1.10.3",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "gulp-connect": "^3.1.0",
     "gulp-eslint": "^2.0.0",
     "gulp-jscs": "^3.0.2",
-    "gulp-load-plugins": "^1.2.0",
     "gulp-open": "^1.0.0",
     "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.1.1",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.5.3"
-  },
-  "dependencies": {
-    "jquery": "^1.12.1"
-  },
-  "author": "muyuu",
-  "license": "MIT"
+    "gulp-uglify": "^1.5.3",
+    "standby.css": "^0.2.1"
+  }
 }
