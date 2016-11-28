@@ -1,60 +1,84 @@
-const g = require("gulp");
-const $ = require( 'gulp-load-plugins' )();
-const connect = require('gulp-connect');
+const gulp = require("gulp");
+const babel = require("gulp-babel");
+const eslint = require("gulp-eslint");
+const connect = require("gulp-connect");
+const jscs = require("gulp-jscs");
+const open = require("gulp-open");
+const rename = require("gulp-rename");
+const sass = require("gulp-sass");
+const sourcemaps = require("gulp-sourcemaps");
+const uglify = require("gulp-uglify");
 
-const port = 3000;
-
-filename = "tabn";
-file = `${filename}.js`;
+const port = 7000;
+const filename = "tabn";
+const file = `${filename}.js`;
 
 
 // local server
-g.task("connect", ()=>{
+gulp.task("connect", () =>{
     connect.server({
-        port: port,
+        port      : port,
         livereload: true
     });
 
-    const options = {
-        url: `http://localhost:${port}`,
-        app: "Google Chrome"
-    };
+    gulp.src("./index.html")
+        .pipe(open({
+            uri: `http://localhost:${port}/index.html`,
+            app: "Google Chrome"
+        }));
+});
 
-    g.src("./index.html")
-    .pipe($.open("", options));
+gulp.task("css", ()=>{
+    gulp.src(["src/css/style.sass"])
+        .pipe(sass({
+            outputStyle: 'expanded'
+        }))
+        .pipe(gulp.dest("./"));
 });
 
 
-g.task('lint', ()=>{
-    g.src([file])
-    .pipe($.eslint())
-    .pipe($.eslint.format());
+gulp.task("babel", ()=>{
+    gulp.src([`src/js/${file}`])
+        .pipe(babel({
+            presets: ["es2015"]
+        }))
+        .pipe(gulp.dest("./"));
 });
 
 
-g.task('jscs', ()=>{
-    g.src(file)
-    .pipe($.jscs());
+gulp.task('lint', ()=>{
+    gulp.src([file])
+        .pipe(eslint())
+        .pipe(eslint.format());
 });
 
 
+gulp.task('jscs', ()=>{
+    gulp.src(file)
+        .pipe(jscs());
+});
 
-g.task("default", ['connect'], ()=>{
-    g.watch("**/*.js", ["lint", "jscs"]);
+
+gulp.task('dev', ['babel'], ()=>{
+    gulp.run(['lint', 'jscs']);
+});
+
+
+gulp.task("default", ["connect"], ()=>{
+    gulp.watch("./src/**/*.js", ["dev"]);
+    gulp.watch("./src/**/*.sass", ["css"]);
 });
 
 
 // build
-g.task('build', ()=>{
-    g.src(file)
-    .pipe($.sourcemaps.init())
-    .pipe($.rename({
-        basename: `${filename}.min`,
-        extname: `.js`
-    }))
-    .pipe($.uglify())
-    .pipe($.sourcemaps.write('./'))
-    .pipe(g.dest('./'));
+gulp.task('build', ()=>{
+    gulp.src(file)
+        .pipe(sourcemaps.init())
+        .pipe(rename({
+            basename: `${filename}.min`,
+            extname : `.js`
+        }))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('./'));
 });
-
-
